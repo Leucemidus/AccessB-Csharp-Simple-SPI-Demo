@@ -1,0 +1,18 @@
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.exe.config
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.exe
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.pdb
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.csprojResolveAssemblyReference.cache
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple_SPI_Demo.Form1.resources
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple_SPI_Demo.Properties.Resources.resources
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.csproj.GenerateResource.Cache
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.exe
+c:\users\sodor\documents\visual studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.pdb
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.exe.config
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.exe
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.pdb
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.exe
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\bin\Debug\Simple SPI Demo.pdb
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.csprojResolveAssemblyReference.cache
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple_SPI_Demo.Form1.resources
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple_SPI_Demo.Properties.Resources.resources
+C:\Users\Omar trevizo\Documents\Visual Studio 2012\Projects\Simple SPI Demo\Simple SPI Demo\obj\Debug\Simple SPI Demo.csproj.GenerateResource.Cache
