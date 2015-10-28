@@ -342,10 +342,16 @@ namespace Simple_SPI_Demo
         }
 
         //Este metodo realiza lectura de los datos desde la tarjeta de forma sincrona, por lo que es una funcion bloqueante, se puede hacer que la funcion use un thread si se pasa el parametro thread como true
+        /// <summary>
+        /// Read RAW data from device, synch read
+        /// </summary>
+        /// <param name="InBuffer">64 bytes long array to place received RAW data</param>
+        /// <param name="thread">I'm working on it, for now set it false or it won't work.</param>
+        /// <returns></returns>
         public bool ReadUSB(ref byte[] InBuffer, bool thread)
         {
             int Bsize = 65; //Cantidad de bytes a leer, deberia de ser 64 pero son 65 posiblemente el problema esta en el marshal.copy al final, 64 espesificado por el CUSTOM HID demo PIC18F2550
-            InBuffer = new byte[Bsize];
+            InBufferTemp = new byte[Bsize];
             Int32 BytesRead = 0;
 
             //Con allochglobal creo un buffer del tamaño espesificado y nos proporciona un puntero hacia el mismo
@@ -357,7 +363,7 @@ namespace Simple_SPI_Demo
                     {
                         if (ReadFile(USBDeviceInfo.ReadHandle, UnManagedBuffer, Bsize, ref BytesRead, IntPtr.Zero) == false)
                         {
-                            MessageBox.Show("GetLasWin32Error: " + Marshal.GetLastWin32Error().ToString());
+                            MessageBox.Show("GetLastWin32Error: " + Marshal.GetLastWin32Error().ToString());
                             return false;
                         }
                     }
@@ -371,22 +377,32 @@ namespace Simple_SPI_Demo
             }
 
             //Paso los datos leeidos del unmanaged buffer al managed buffer
-            Marshal.Copy(UnManagedBuffer, InBuffer, 0, Bsize);//El ultimo argumento es el numero de bytes a copiar, no se por que solo me funciona con 3 cuando deberiand e ser 2
+            Marshal.Copy(UnManagedBuffer, InBufferTemp, 0, Bsize);//El ultimo argumento es el numero de bytes a copiar, no se por que solo me funciona con 3 cuando deberiand e ser 2
             //Libero recursos
             Marshal.FreeHGlobal(UnManagedBuffer);
+            Array.Copy(InBufferTemp, 1, InBuffer, 0, 64);
             return true;
         }
 
         //Metodo para escribir hacia la tarjeta
+        /// <summary>
+        /// Send RAW data to the device, synch write
+        /// </summary>
+        /// <param name="OutBuffer">64 byte long array that contains the data to be sent</param>
+        /// <returns>True is data transfer was success, false if not.</returns>
         public bool WriteUSB(ref byte[] OutBuffer)
         {
-            int Bsize = OutBuffer.Length;
+            int Bsize = 65;
+            byte[] OutBufferTemp = new byte[Bsize];
             string error;
             Int32 NumbersOfBytesWritten = 0;
             IntPtr UnManagedBuffer = Marshal.AllocHGlobal(Bsize); //Crea un buffer del tamaño espesificado y regresa el puntero hacia ese buffer
-            Marshal.Copy(OutBuffer, 0, UnManagedBuffer, Bsize);//Paso los datos a transmitir a un buffer no manejado
 
-            if (WriteFile(USBDeviceInfo.WriteHandle, OutBuffer, Bsize, ref NumbersOfBytesWritten, IntPtr.Zero) == false)
+            OutBufferTemp[0] = 0;
+            Array.Copy(OutBuffer, 0, OutBufferTemp, 1, 64);
+            Marshal.Copy(OutBufferTemp, 0, UnManagedBuffer, Bsize);//Paso los datos a transmitir a un buffer no manejado
+
+            if (WriteFile(USBDeviceInfo.WriteHandle, OutBufferTemp, Bsize, ref NumbersOfBytesWritten, IntPtr.Zero) == false)
             {
                 error = Marshal.GetLastWin32Error().ToString();
                 return false;
@@ -414,5 +430,7 @@ namespace Simple_SPI_Demo
 
         #endregion
 
+
+        public byte[] InBufferTemp { get; set; }
     }
 }
