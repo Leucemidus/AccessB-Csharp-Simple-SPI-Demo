@@ -1211,7 +1211,7 @@ namespace Simple_SPI_Demo
         /// </summary>
         /// <param name="Channel">Channel of the ADC. ADC_CH0 to ADC_CH12</param>
         /// <returns>The converted value from the ADC channel selected, range 0-1024</returns>
-        public UInt16 ADC_Val(UInt32 Channel)
+        public UInt32 ADC_Val(UInt32 Channel)
         {
             byte[] SndData = new byte[64];                                                              //Datos a enviar
             byte[] RcvData = new byte[64];                                                              //Datos recibidos, eco del comando enviado para verificación
@@ -1239,7 +1239,14 @@ namespace Simple_SPI_Demo
                     //Espero la respuesta al comando enviado
                     if (ReadUSB(ref RcvData, false) == true)
                     {
-                        return BitConverter.ToUInt16(RcvData, 2);                                       //DAtos en bytes 2 y 3
+                        //UInt32 ADC_Conv = Convert.ToUInt32(RcvData[2]);
+                        //ADC_Conv = (ADC_Conv << 8) | Convert.ToUInt32(RcvData[1]);
+                        //return ADC_Conv;
+
+                        RcvData[3] = 0;
+                        RcvData[4] = 0;
+                        UInt32 ADC_Conv = BitConverter.ToUInt32(RcvData, 1);
+                        return ADC_Conv;
                     }
                     else
                     {
@@ -1488,7 +1495,7 @@ namespace Simple_SPI_Demo
         /// <param name="TxData">Array of data to be send</param>
         /// <param name="Repeat">set a repeated start condition with a read or write</param>
         /// <returns>Array of 64 bytes long of data from the I2C device</returns>
-        public byte[] I2C_Transfer(UInt16 SlaveAdd,  byte SlaveAddType, UInt32 ReadWrite, byte NumOfBytesTx, byte NumOfBytesRx, byte[] TxData, byte Repeat)
+        public byte[] I2C_Transfer(UInt32 SlaveAdd,  byte SlaveAddType, UInt32 ReadWrite, byte NumOfBytesTx, byte NumOfBytesRx, byte[] TxData, byte Repeat)
         {
             byte[] SndData = new byte[64];
             byte[] RcvData = new byte[64];
@@ -1502,7 +1509,7 @@ namespace Simple_SPI_Demo
 
             if (NumOfBytesTx > 56)
             {
-                MessageBox.Show("Solo se pueden enviar 58 bytes de datos maximo");
+                MessageBox.Show("Solo se pueden enviar 56 bytes de datos maximo");
                 return RcvData;
             }
 
@@ -1512,11 +1519,13 @@ namespace Simple_SPI_Demo
             if (SlaveAddType == 7)
             {
                 SndData[1] = Convert.ToByte((SlaveAdd >> 8) & 0xFF);                                    //SLAVEADDH
-                SndData[2] = Convert.ToByte((((SlaveAdd << 1) & 0xFE) | (UInt16)ReadWrite) & 0xFF);     //SLAVEADDL with Read/Write bit
+                //SndData[2] = Convert.ToByte((((SlaveAdd << 1) & 0xFE) | (UInt16)ReadWrite) & 0xFF);     //SLAVEADDL with Read/Write bit
+                SndData[2] = Convert.ToByte((((SlaveAdd << 1) & 0xFE) | ReadWrite) & 0xFF);
             }
             else if(SlaveAddType == 10)                                                                 //10 bit address
             {
-                SndData[1] = Convert.ToByte((((SlaveAdd >> 7) & 0xFE) | (UInt16)ReadWrite) & 0xFF);     //SLAVEADDH with R/W bit
+                //SndData[1] = Convert.ToByte((((SlaveAdd >> 7) & 0xFE) | (UInt16)ReadWrite) & 0xFF);     //SLAVEADDH with R/W bit
+                SndData[1] = Convert.ToByte((((SlaveAdd >> 7) & 0xFE) | ReadWrite) & 0xFF);
                 SndData[2] = Convert.ToByte(SlaveAdd & 0xFF);                                           //SLAVEADDL
             }
 
